@@ -1,4 +1,4 @@
-package com.br.login.login.domain;
+package com.br.login.login.dto;
 
 import javax.validation.constraints.NotBlank;
 
@@ -6,7 +6,6 @@ public class AuthRequest {
 
     @NotBlank
     private String userName;
-
     @NotBlank
     private String password;
 

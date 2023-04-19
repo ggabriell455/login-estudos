@@ -26,7 +26,6 @@ public class LoginApplication {
 	@EventListener(ApplicationReadyEvent.class)
 	public void doSomethingAfterStartup() {
 		User user = new User("gabriel", passwordEncoder.encode("123"), "gabriel.alves1997@hotmail.com");
-
 		userRepository.save(user);
 	}
 }
