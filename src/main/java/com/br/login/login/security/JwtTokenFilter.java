@@ -1,10 +1,10 @@
 package com.br.login.login.security;
 
+import com.br.login.login.domain.User;
 import com.br.login.login.repository.UserRepository;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -40,16 +40,16 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         final String token = header.split(" ")[1].trim();
 
         // Get user identity and set it on the spring security context
-        final UserDetails userDetails = userRepo.findByUsername(jwtTokenUtil.getUsernameFromToken(token));
+        final User user = userRepo.findByUsername(jwtTokenUtil.getUsernameFromToken(token));
 
         // Get jwt token and validate
 
-        if (userDetails == null && jwtTokenUtil.validateToken(token, userDetails)) {
+        if (user == null && jwtTokenUtil.validateToken(token, user)) {
             chain.doFilter(request, response);
             return;
         }
 
-        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
+        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities());
 
         authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 

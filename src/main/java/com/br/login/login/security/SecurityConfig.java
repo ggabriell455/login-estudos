@@ -20,18 +20,19 @@ import javax.servlet.http.HttpServletResponse;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private CustomUserDetailsService customUserDetailsService;
+    private final UserRepository userRepository;
     private final JwtTokenFilter jwtTokenFilter;
 
 
-    public SecurityConfig(CustomUserDetailsService customUserDetailsService, JwtTokenFilter jwtTokenFilter) {
-        this.customUserDetailsService = customUserDetailsService;
+    public SecurityConfig(UserRepository userRepository, JwtTokenFilter jwtTokenFilter) {
+        this.userRepository = userRepository;
         this.jwtTokenFilter = jwtTokenFilter;
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(username -> customUserDetailsService.loadUserByUsername(username));
+        auth.userDetailsService(userRepository::findByUsername)
+                .passwordEncoder(passwordEncoder());
     }
 
     @Override
