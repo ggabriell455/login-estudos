@@ -28,7 +28,10 @@ public class LoginApplication {
 
     @EventListener(ApplicationReadyEvent.class)
     public void doSomethingAfterStartup() {
-        User user = new User("gabriel", passwordEncoder.encode("123"), "gabriel.alves1997@hotmail.com", Collections.singleton(new Role("USER")));
-        userRepository.save(user);
+        User user = this.userRepository.findByUsername("gabriel");
+        if (user == null) {
+            user = new User("gabriel", passwordEncoder.encode("123"), "gabriel.alves1997@hotmail.com", Collections.singleton(new Role(Role.USER)));
+            userRepository.save(user);
+        }
     }
 }

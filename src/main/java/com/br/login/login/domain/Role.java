@@ -12,6 +12,8 @@ import javax.persistence.Id;
 @Entity
 public class Role implements GrantedAuthority {
 
+    public static final String USER = "USER";
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

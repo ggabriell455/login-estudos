@@ -3,10 +3,12 @@ package com.br.login.login.domain;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,6 +18,7 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class User implements UserDetails {
 
 
