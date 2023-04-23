@@ -1,10 +1,10 @@
-package com.br.login.login.controller;
+package com.br.login.controller;
 
-import com.br.login.login.domain.User;
-import com.br.login.login.dto.AuthRequest;
-import com.br.login.login.dto.UserView;
-import com.br.login.login.mapper.UserMapper;
-import com.br.login.login.security.JwtTokenUtil;
+import com.br.login.domain.User;
+import com.br.login.dto.AuthRequest;
+import com.br.login.dto.UserView;
+import com.br.login.mapper.UserMapper;
+import com.br.login.config.security.JwtTokenUtil;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,7 +1,7 @@
-package com.br.login.login.security;
+package com.br.login.config.security;
 
-import com.br.login.login.domain.User;
-import com.br.login.login.repository.UserRepository;
+import com.br.login.domain.User;
+import com.br.login.repository.UserRepository;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

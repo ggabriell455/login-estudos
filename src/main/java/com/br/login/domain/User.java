@@ -1,4 +1,4 @@
-package com.br.login.login.domain;
+package com.br.login.domain;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
@@ -15,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.Set;
 
 @Entity
@@ -40,16 +41,15 @@ public class User implements UserDetails {
 
     @Cascade(CascadeType.ALL)
     @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Role> authorities;
+    private Set<Role> authorities = Collections.singleton(new Role(Role.USER));
 
     public User() {
     }
 
-    public User(String username, String password, String email, Set<Role> authorities) {
+    public User(String username, String password, String email) {
         this.username = username;
         this.password = password;
         this.email = email;
-        this.authorities = authorities;
     }
 
     public Long getId() {

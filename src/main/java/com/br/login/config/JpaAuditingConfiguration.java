@@ -1,4 +1,4 @@
-package com.br.login.login.config;
+package com.br.login.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;

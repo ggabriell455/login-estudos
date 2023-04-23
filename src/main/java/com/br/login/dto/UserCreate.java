@@ -1,4 +1,4 @@
-package com.br.login.login.dto;
+package com.br.login.dto;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;

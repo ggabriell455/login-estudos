@@ -1,7 +1,8 @@
-package com.br.login.login.security;
+package com.br.login.config.security;
 
-import com.br.login.login.repository.UserRepository;
+import com.br.login.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -49,6 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 // Our public endpoints
                 .antMatchers("/authenticate/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/user").permitAll()
                 // Our private endpoints
                 .anyRequest().authenticated();
 

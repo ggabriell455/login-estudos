@@ -1,4 +1,4 @@
-package com.br.login.login.domain;
+package com.br.login.domain;
 
 import org.springframework.security.core.GrantedAuthority;
 

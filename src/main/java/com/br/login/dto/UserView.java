@@ -1,4 +1,4 @@
-package com.br.login.login.dto;
+package com.br.login.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 

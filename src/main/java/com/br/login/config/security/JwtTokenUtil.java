@@ -1,7 +1,7 @@
-package com.br.login.login.security;
+package com.br.login.config.security;
 
 
-import com.br.login.login.domain.User;
+import com.br.login.domain.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
