@@ -1,6 +1,5 @@
 package com.br.login.config.security;
 
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -22,12 +21,9 @@ import org.springframework.web.filter.CorsFilter;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final CustomUserDetailsService customUserDetailsService;
     private final JwtTokenFilter jwtTokenFilter;
 
-
-    public SecurityConfig(CustomUserDetailsService customUserDetailsService, JwtTokenFilter jwtTokenFilter) {
-        this.customUserDetailsService = customUserDetailsService;
+    public SecurityConfig(JwtTokenFilter jwtTokenFilter) {
         this.jwtTokenFilter = jwtTokenFilter;
     }
 
@@ -39,10 +35,6 @@ public class SecurityConfig {
 
         http = http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and();
 
-        http = http.exceptionHandling().authenticationEntryPoint((request, response, ex) -> {
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, ex.getMessage());
-        }).and();
-
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST, "/user").permitAll()
@@ -51,9 +43,6 @@ public class SecurityConfig {
                 )
                 .httpBasic(Customizer.withDefaults());
 
-        http.userDetailsService(customUserDetailsService);
-
-        // Set permissions on endpoints
         // Add JWT token filter
         http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();

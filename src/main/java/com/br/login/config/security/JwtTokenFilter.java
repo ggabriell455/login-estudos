@@ -43,7 +43,6 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         final User user = userRepo.findByUsername(jwtTokenUtil.getUsernameFromToken(token));
 
         // Get jwt token and validate
-
         if (user == null && jwtTokenUtil.validateToken(token, user)) {
             filterChain.doFilter(request, response);
             return;
