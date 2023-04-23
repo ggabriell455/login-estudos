@@ -23,7 +23,6 @@ public class UserController {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
-
     private final PasswordEncoder passwordEncoder;
 
     public UserController(UserRepository userRepository, UserMapper userMapper, PasswordEncoder passwordEncoder) {
