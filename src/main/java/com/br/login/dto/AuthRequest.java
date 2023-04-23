@@ -1,6 +1,6 @@
 package com.br.login.dto;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 public class AuthRequest {
 

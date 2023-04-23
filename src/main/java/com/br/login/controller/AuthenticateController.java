@@ -1,10 +1,11 @@
 package com.br.login.controller;
 
+import com.br.login.config.security.JwtTokenUtil;
 import com.br.login.domain.User;
 import com.br.login.dto.AuthRequest;
 import com.br.login.dto.UserView;
 import com.br.login.mapper.UserMapper;
-import com.br.login.config.security.JwtTokenUtil;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.validation.Valid;
 
 @RestController
 @RequestMapping(path = "/authenticate")

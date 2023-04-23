@@ -10,6 +10,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     User findByUsername(String username) throws UsernameNotFoundException;
 
-    User deleteUserByUsername(String username) throws UsernameNotFoundException;
+    void deleteUserByUsername(String username) throws UsernameNotFoundException;
 
 }
