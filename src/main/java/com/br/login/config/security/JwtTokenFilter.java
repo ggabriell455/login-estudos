@@ -33,17 +33,19 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
         // Get authorization header and validate
         final String header = request.getHeader(HttpHeaders.AUTHORIZATION);
+
         if (isEmpty(header) || !header.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
         }
+
         final String token = header.split(" ")[1].trim();
 
         // Get user identity and set it on the spring security context
         final User user = userRepo.findByUsername(jwtTokenUtil.getUsernameFromToken(token));
 
         // Get jwt token and validate
-        if (user == null && jwtTokenUtil.validateToken(token, user)) {
+        if (user == null || !jwtTokenUtil.validateToken(token, user)) {
             filterChain.doFilter(request, response);
             return;
         }
