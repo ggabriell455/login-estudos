@@ -13,8 +13,6 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.security.Key;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.function.Function;
 
 @Component
@@ -58,7 +56,7 @@ public class JwtTokenUtil implements Serializable {
         return false;
     }
 
-     public String generateToken(UserDetails subject) {
+    public String generateToken(UserDetails subject) {
         return Jwts.builder()
                 .signWith(key)
                 .setSubject(subject.getUsername())
