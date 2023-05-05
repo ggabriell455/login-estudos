@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "/authenticate")
+@RequestMapping(path = "/authenticate", produces="application/json", consumes="application/json" )
 public class AuthenticateController {
 
     private final AuthenticationManager authenticationManager;
@@ -32,7 +32,7 @@ public class AuthenticateController {
         this.userMapper = userMapper;
     }
 
-    @PostMapping("/login")
+    @PostMapping(value = "/login")
     public ResponseEntity<UserView> login(@RequestBody @Valid AuthRequest request) {
         try {
             Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUserName(), request.getPassword()));

@@ -6,6 +6,8 @@ import com.br.login.dto.UserView;
 import com.br.login.mapper.UserMapper;
 import com.br.login.repository.UserRepository;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,9 +18,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
 
 @RestController
-@RequestMapping("user")
+@RequestMapping(name = "users", produces = "application/json", consumes = "application/json")
 public class UserController {
 
     private final UserRepository userRepository;
@@ -35,7 +40,16 @@ public class UserController {
     public ResponseEntity<UserView> create(@Valid @RequestBody UserCreate userCreate) {
         User user = new User(userCreate.getUsername(), userCreate.getEmail(), passwordEncoder.encode(userCreate.getPassword()));
         User saved = this.userRepository.save(user);
-        return ResponseEntity.ok(this.userMapper.mapToUserView(saved));
+
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(saved.getUsername())
+                .toUri();
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .header(HttpHeaders.LOCATION, location.toString())
+                .body(this.userMapper.mapToUserView(saved));
     }
 
     @GetMapping("/{username}")
