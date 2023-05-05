@@ -23,7 +23,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 
 @RestController
-@RequestMapping(name = "users", produces = "application/json", consumes = "application/json")
+@RequestMapping(path = "/users", produces = "application/json", consumes = "application/json")
 public class UserController {
 
     private final UserRepository userRepository;
