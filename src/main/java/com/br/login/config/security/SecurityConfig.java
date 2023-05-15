@@ -1,5 +1,6 @@
 package com.br.login.config.security;
 
+import com.br.login.config.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

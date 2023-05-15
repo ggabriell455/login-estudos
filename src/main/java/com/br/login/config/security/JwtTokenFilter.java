@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import static org.aspectj.util.LangUtil.isEmpty;
 
@@ -42,10 +43,16 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         final String token = header.split(" ")[1].trim();
 
         // Get user identity and set it on the spring security context
-        final User user = userRepo.findByUsername(jwtTokenUtil.getUsernameFromToken(token));
+        Optional<User> userOptional = userRepo.findByUsername(jwtTokenUtil.getUsernameFromToken(token));
+
+        User user = null;
+
+        if (userOptional.isPresent()) {
+            user = userOptional.get();
+        }
 
         // Get jwt token and validate
-        if (user == null || !jwtTokenUtil.validateToken(token, user)) {
+        if (user == null || !jwtTokenUtil.validateToken(token, userOptional.get())) {
             filterChain.doFilter(request, response);
             return;
         }

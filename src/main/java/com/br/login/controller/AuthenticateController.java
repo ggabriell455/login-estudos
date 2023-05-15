@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "/authenticate", produces="application/json", consumes="application/json" )
+@RequestMapping(path = "/authenticate", produces = "application/json", consumes = "application/json")
 public class AuthenticateController {
 
     private final AuthenticationManager authenticationManager;

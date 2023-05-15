@@ -4,12 +4,11 @@ import com.br.login.domain.User;
 import com.br.login.dto.UserCreate;
 import com.br.login.dto.UserView;
 import com.br.login.mapper.UserMapper;
-import com.br.login.repository.UserRepository;
+import com.br.login.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,23 +22,21 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 
 @RestController
-@RequestMapping(path = "/users", produces = "application/json", consumes = "application/json")
+@RequestMapping(path = "/users", produces = "application/json")
 public class UserController {
 
-    private final UserRepository userRepository;
+    private final UserService service;
     private final UserMapper userMapper;
-    private final PasswordEncoder passwordEncoder;
 
-    public UserController(UserRepository userRepository, UserMapper userMapper, PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
+    public UserController(UserService service, UserMapper userMapper) {
+        this.service = service;
         this.userMapper = userMapper;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @PostMapping
     public ResponseEntity<UserView> create(@Valid @RequestBody UserCreate userCreate) {
-        User user = new User(userCreate.getUsername(), userCreate.getEmail(), passwordEncoder.encode(userCreate.getPassword()));
-        User saved = this.userRepository.save(user);
+
+        User saved = this.service.save(userCreate);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -54,20 +51,20 @@ public class UserController {
 
     @GetMapping("/{username}")
     public ResponseEntity<UserView> findByUsername(@PathVariable String username) {
-        User user = this.userRepository.findByUsername(username);
+        User user = this.service.findByUsername(username);
         return ResponseEntity.ok(this.userMapper.mapToUserView(user));
     }
 
     @PutMapping
     public ResponseEntity<UserView> update(@Valid UserCreate userCreate) {
-        User user = this.userRepository.findByUsername(userCreate.getUsername());
+        User user = this.service.findByUsername(userCreate.getUsername());
         user = this.userMapper.update(user, userCreate);
         return ResponseEntity.ok(this.userMapper.mapToUserView(user));
     }
 
     @DeleteMapping("/{username}")
     public ResponseEntity<Void> delete(@PathVariable String username) {
-        this.userRepository.deleteUserByUsername(username);
+        this.service.deleteUserByUsername(username);
         return ResponseEntity.noContent().build();
     }
 
