@@ -3,6 +3,10 @@ package com.br.login.service;
 import com.br.login.domain.User;
 import com.br.login.dto.UserCreate;
 import com.br.login.repository.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -37,6 +41,11 @@ public class UserService {
 
     public void deleteUserByUsername(String username) {
         this.userRepository.deleteByUsername(username);
+    }
+
+    public Page<User> findAll(Integer pageNumber, Integer pageSize, String sortBy) {
+        Pageable paging = PageRequest.of(pageNumber, pageSize, Sort.by(sortBy));
+        return this.userRepository.findAll(paging);
     }
 
 }
