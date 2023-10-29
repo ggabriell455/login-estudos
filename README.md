@@ -13,7 +13,7 @@ Esse pequeno projeto de estudos é um micro serviço para autenticação com Tok
 
 Passo a passo para subir a aplicação como docker:
 
-1 - Após instalar todo setup para docker no ps, abrir terminal na pasta raiz.
+1 - Após instalar todo setup para docker e/ou dockercompose no PC, abrir terminal na pasta raiz do projeto.
 
 2 -  Realizar Build do projeto para gerar o Jar.
 
